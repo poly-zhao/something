@@ -25,3 +25,9 @@
 `$ git config --gobal core.autocrlf false `
 
 `$ git init`
+
+
+
+### 克隆Github项目到本地
+
+git clone https://github.com/poly-zhao/KotlinMall(远程地址)
