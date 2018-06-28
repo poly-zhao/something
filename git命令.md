@@ -12,7 +12,7 @@
 
 
 
-####使用上面代码向新建的空的repository时 Permission deny 异常
+#### 使用上面代码向新建的空的repository时 Permission deny 异常
 
 使用`git remote rm origin`移除本地初始化仓库 , 然后重新使用`git remote add origin http://123.57.243.182/zhaole/ejia7_mvp.git` 后再push就没有问题了. 原来使用的是ssh链接
 
