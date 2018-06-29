@@ -1,4 +1,4 @@
-### 创建本地仓库，(ba测试一下Ab)关联远程仓库并提交
+### 创建本地仓库，(bca测试一下Acb)关联远程仓库并提交
 在github上建立一个空repository，并不做初始化
 
 在本地的一个文件夹中右击打开git bash
@@ -41,3 +41,23 @@ git clone https://github.com/poly-zhao/KotlinMall(远程地址)
 `$ git init`
 
 #### 使用命令解决冲突
+
+1. 远程repository的内容更改, 本地没有pull也更改了, 这时想把本地的更改内容push到远程时会出现conflict
+
+   ```git
+   Administrator@zhaole MINGW64 ~/Desktop/asdf/something (master)
+   $ git add git命令.md
+   
+   Administrator@zhaole MINGW64 ~/Desktop/asdf/something (master)
+   $ git commit -m "conflict"
+   [master cc8bbfc] conflict
+    1 file changed, 1 insertion(+), 1 deletion(-)
+   
+   Administrator@zhaole MINGW64 ~/Desktop/asdf/something (master)
+   $ git pull
+   Auto-merging git命令.md
+   CONFLICT (content): Merge conflict in git命令.md
+   Automatic merge failed; fix conflicts and then commit the result.//有冲突, 提示合并冲突
+   ```
+
+2. 这时要找到发生冲突文件, 然后将有如下标识的代码, 修改为你想要
