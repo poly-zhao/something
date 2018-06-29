@@ -93,4 +93,10 @@ git clone https://github.com/poly-zhao/KotlinMall(远程地址)
    
    ```
 
-   
+
+#### fatal: HttpRequestException encountered.
+
+Github 禁用了TLS v1.0 and v1.1，必须更新Windows的git凭证管理器 
+
+解决方法:https://blog.csdn.net/txy864/article/details/79557729 
+或者 直接到https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/tag/v1.16.2下载[**GCMW-1.16.2.exe**](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/download/v1.16.2/GCMW-1.16.2.exe) 并安装即可
