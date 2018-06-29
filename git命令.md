@@ -1,6 +1,4 @@
-### 创建本地仓库，(bca测试一下Acb)关联远程仓库并提交
-在github上建立一个空repository，并不做初始化
-
+### 创建本地仓库，(bdca测试一下Adcb)关联远程仓库并提交
 在本地的一个文件夹中右击打开git bash
 
 1. `git init`初始化一个本地git仓库
@@ -60,4 +58,35 @@ git clone https://github.com/poly-zhao/KotlinMall(远程地址)
    Automatic merge failed; fix conflicts and then commit the result.//有冲突, 提示合并冲突
    ```
 
-2. 这时要找到发生冲突文件, 然后将有如下标识的代码, 修改为你想要
+2. 这时要找到发生冲突文件, 然后将有如下标识的代码, 修改为你想要![git冲突](.\imgs\git冲突.png)
+
+   修改后
+
+   ```java
+   创建本地仓库，(bdca测试一下Adcb)关联远程仓库并提交
+   ```
+
+3. 然后重新`add`, `commit`,`push` ,  //注意**解决冲突时`add`, `commit`操作都是分支(master|MERGING)上进行的**, 执行完`master`后才又回到`master`分支
+
+   ```java
+   Administrator@zhaole MINGW64 ~/Desktop/asdf/something (master|MERGING)
+   $ git add git命令.md
+   
+   Administrator@zhaole MINGW64 ~/Desktop/asdf/something (master|MERGING)
+   $ git commit -m "conflict solved"
+   [master 2daa4b9] conflict solved
+   
+   Administrator@zhaole MINGW64 ~/Desktop/asdf/something (master)
+   $ git push
+   Counting objects: 6, done.
+   Delta compression using up to 4 threads.
+   Compressing objects: 100% (6/6), done.
+   Writing objects: 100% (6/6), 619 bytes | 0 bytes/s, done.
+   Total 6 (delta 4), reused 0 (delta 0)
+   remote: Resolving deltas: 100% (4/4), completed with 2 local objects.
+   To https://github.com/poly-zhao/something.git
+      945f1b0..2daa4b9  master -> master
+   
+   ```
+
+   
