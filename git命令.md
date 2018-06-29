@@ -16,6 +16,10 @@
 5. 用编辑器打开id_rsa.pub文件，复制内容，在gitlab.com的网站上到ssh密钥管理页面，在Key一栏粘贴刚才复制的内容，Title一栏输入名称，这个名称随便起，建议英文，然后点击Add。 
 6. 完成
 
+### Github配置公钥
+
+
+
 ### 克隆Github项目到本地
 
 git clone https://github.com/poly-zhao/KotlinMall(远程地址)
