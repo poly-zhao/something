@@ -100,3 +100,29 @@ Github 禁用了TLS v1.0 and v1.1，必须更新Windows的git凭证管理器
 
 解决方法:https://blog.csdn.net/txy864/article/details/79557729 
 或者 直接到https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/tag/v1.16.2下载[**GCMW-1.16.2.exe**](https://github.com/Microsoft/Git-Credential-Manager-for-Windows/releases/download/v1.16.2/GCMW-1.16.2.exe) 并安装即可
+
+
+
+#### 输入账号密码后无法再次弹出认证窗口且一直认证失败[fatal: Authentication failed for]的解决办法
+
+git提交代码时输入账号密码后一直提示如下错误, 并且无法再次弹出账号密码输入框
+
+```git
+$ git push -u origin master
+fatal: Authentication failed for 'http://192.168.1.222:8099/zhaol/pan_android.git/'
+```
+
+
+
+解决方法一: (无效)
+
+git config --system --unset credential.helper
+
+解决方法二: (有效)
+
+在下面方框中选择 两项中的一个
+
+- 编辑 修改已经输入的账号密码
+- 删除 再次提交代码时 输入git 的账号密码
+
+![Authentication failed for](C:\Users\Administrator\Desktop\总结\something\imgs\Authentication failed for.png)
