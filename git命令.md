@@ -126,3 +126,19 @@ git config --system --unset credential.helper
 - 删除 再次提交代码时 输入git 的账号密码
 
 ![Authentication failed for](C:\Users\Administrator\Desktop\总结\something\imgs\Authentication failed for.png)
+
+
+
+#### 修改远程仓库
+
+- 查看当前的远程仓库
+
+  git remote -v
+
+- 修改为想要设置的远程仓库
+
+  git remote set-url origin https://where you want to put your repository to.git
+
+- 验证一下
+
+  git remote -v
