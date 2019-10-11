@@ -90,3 +90,154 @@ function Person(national, age)
 }
 ```
 
+#### 5. Object.create()
+
+构造函数作为模板，可以生成实例对象。但是，有时拿不到构造函数，只能拿到一个现有的对象。我们希望以这个现有的对象作为模板，生成新的实例对象，这时就可以使用`Object.create()`方法。
+
+```javascript
+  var car = {
+      speed:100,
+      drive:function(){
+          console.log("rolling in the deep");
+      }
+  }  
+
+  var truck = Object.create(car)
+  console.log(car.speed);		//100
+  console.log(truck.speed);		//100
+  car.drive();					//rolling in the deep
+  truck.drive();				//rolling in the deep
+  console.log(car);				//Object {speed: 100, drive: }
+  console.log(truck);			//Object {}
+  
+  console.log(truck === car);	//false
+  console.log(truck == car);	//false
+```
+
+**不知道为什么直接打印truck时输出没有带自己的成员**. 
+
+`truck`继承了`car`的属性和方法, `car`是`truck`的模板.
+
+#### 6. this关键字
+
+`this`就是属性或方法“当前”所在的对象。它指向(代表)一个对象。
+
+1. `this`用在构造函数之中，表示实例对象。
+
+   ```javascript
+   var Vehicle = function (){
+     this.price = 1000;	
+   };
+   //this表示通过new Vehicle()创建的实例对象
+   //在严格模式下直接调用Vehicle()会报错
+   ```
+
+2. `this`的指向是可变的。由于对象的属性(变量和方法)可以赋给另一个对象，所以属性所在的当前对象是可变的
+
+   ```js
+   function f() {
+     return '姓名：'+ this.name;
+   }
+   
+   var A = {
+     name: '张三',
+     describe: f
+   };
+   
+   var B = {
+     name: '李四',
+     describe: f
+   };
+   //f()内的this会指向调用的f的对象
+   A.describe() // "姓名：张三"
+   B.describe() // "姓名：李四"
+   ```
+
+   JavaScript 语言之中，一切皆对象，运行环境也是对象，所以函数都是在某个对象之中运行，`this`就是函数运行时所在的对象（环境）。
+
+**实质:** 
+
+JavaScript中函数单独保存在内存中. 当函数被赋值给成员属性时, 这个属性会指向函数的内存地址.
+JavaScript 允许在函数体内部，引用当前环境的其他变量。
+由于函数可以在不同的运行环境执行，所以需要有一种机制，能够在函数体内部获得当前的运行环境（context）。所以，`this`就出现了，它的设计目的就是在函数体内部，指代函数当前的运行环境。
+
+#### 7. 函数的prototype属性
+
+**JavaScript 中一切都是对象, 自然函数也是对象. JavaScript 规定，所有对象都有自己的原型对象（prototype）,但是只有函数有prototype属性, 其他没有prototype属性**. 所以这里所说的prototype属性指的是函数对象的属性
+
+1. 所有对象都有自己的原型对象（prototype）
+2. 只有函数有prototype属性
+
+函数可分为普通函数和构造函数. 普通函数的prototype属性无意义. 构造函数生成实例的时候，该属性会自动成为实例对象的原型。在构造函数创建出来的时候，系统会默认的帮构造函数创建并关联一个神秘的对象，这个对象就是原型,就是prototype属性的值(**但是这个神秘对象不是这个函数对象的原型对象, 而是通过这个构造函数创建的实例对象的原型对象**)。js中万物皆对象，因此原型也是对象，而且原型默认的是一个空的对象(**这句话好像不对**)。
+
+```java
+function A() {
+this.name = "123"
+}
+var a = new A();
+
+console.log(A.hasOwnProperty("prototype"));		//true
+console.log(a.hasOwnProperty("prototype"));		//false
+console.log(("prototype") in a);	//false
+console.log(("prototype") in A);	//true
+console.log(A.prototype===Object.getPrototypeOf(a));		//true
+```
+
+
+
+JavaScript 继承机制的设计思想就是，原型对象的所有属性和方法，都能被实例对象共享。也就是说，如果属性和方法定义在原型上，那么所有实例对象就能共享，不仅节省了内存，还体现了实例对象之间的联系。
+
+```javascript
+　　function Person(){ 
+
+　　} 
+　　Person.prototype = { 
+　　　　name : "Nicholas", 
+　　　　age : 29, 
+　　　　job: "Software Engineer", 
+　　　　sayName : function () { 
+　　　　　　alert(this.name); 
+　　　　} 
+　　};
+```
+
+
+
+- 获取原型对象
+
+1. 从 构造函数 获得 原型对象：
+   `构造函数.prototype`
+2. 从 对象实例 获得 父级原型对象：
+   方法一： `对象实例.__proto`__        【 有兼容性问题，不建议使用】
+   方法二：`Object.getPrototypeOf`( 对象实例 )
+
+```js
+function Student(){
+    this.name = "小马扎"; 
+    this.age = 18;
+}
+var lilei = new Student();  // 创建对象实例
+console.log(Student.prototype);  //Student{}
+console.log(lilei.__proto__);  //Student{}
+console.log(Object.getPrototypeOf(lilei));    //Student{}
+```
+
+> 按照JavaScript的说法，function定义的这个Student就是一个Object(对象),而且还是一个很特殊的对象，这个使用function定义的对象与使用new操作符生成的对象之间有一个重要的区别。这个区别就是**function定义的对象有一个prototype属性，使用new生成的对象就没有这个prototype属性**，我们一般称为普通对象！
+
+#### 8. constructor 属性
+
+`prototype`对象有一个`constructor`属性，默认指向`prototype`对象所在的构造函数。由于`constructor`属性定义在`prototype`对象上面，意味着可以被所有实例对象继承。
+
+```js
+
+function A () {}
+var a = new A();
+console.log(Object.getPrototypeOf(a).constructor===A);	//true
+console.log(A.prototype.constructor===A);	//true
+
+a.constructor === A // true
+a.constructor === A.prototype.constructor // true
+a.hasOwnProperty('constructor') // false
+```
+
+上面代码中，`a`是构造函数`A`的实例对象，但是`a`自身没有`constructor`属性，该属性其实是读取原型链上面的`P.prototype.constructor`属性。

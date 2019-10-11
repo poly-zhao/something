@@ -142,3 +142,40 @@ git config --system --unset credential.helper
 - 验证一下
 
   git remote -v
+
+#### 忽略已提交的文件
+
+如果文件已提交, 再在.gitignore中添加对此文件的忽略是无效的. 
+
+想要忽略已提交的文件执行可下步骤:
+
+1. 使用 `git rm --cached （文件名）` 删除掉这个你想忽略的文件； 
+2. 然后更新 .gitignore ，忽略掉目标文件。 
+
+#### stash命令
+
+该命令可以认为是将没有commit的修改暂存起来, 可以进行多次暂存,以栈的形式保存这些暂存
+
+`git stash`会把所有未提交的修改（包括暂存的和非暂存的）都保存起来，用于后续恢复当前工作目录
+
+`git stash save "test-cmd-stash` 同上, 给stash加一个message，用于记录版本，
+
+`git stash list` 查看现有stash
+
+`git stash apply stash@{0}` 恢复指定的暂存到工作目录,`stash@{0}`为暂存的名字, 该命令不带名字时恢复最新的暂存到工作目录
+
+`git stash drop stash@{0}` 删除指定的暂存, 不带名字时删除最新的暂存
+
+`git stash pop`命令恢复最新缓存的工作目录, 并删除该最新缓存(); 等同于先`git stash apply `,再`git stash drop `
+
+`git stash clear` 清除所有的暂存
+
+```git
+git status  //查看当前状态
+//工作目录不是clean的
+git stash	//工作目录恢复到了上次commit的状态
+//工作目录clean, 且与上次commit后的内容一样
+...做一些工作...
+git stash pop //回复到行3时的状态
+```
+
