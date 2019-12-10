@@ -1,4 +1,16 @@
-### 创建本地仓库，(bdca测试一下Adcb)关联远程仓库并提交
+ https://www.jianshu.com/p/92305d949c0e?utm_source=desktop&utm_medium=timeline 
+
+配置用户名和邮箱
+
+```git
+$ git config --global user.name "knight"
+$ git config --global user.email "knight@dayuan.com"
+```
+
+
+
+#### 创建本地仓库，关联远程仓库并提交
+
 在本地的一个文件夹中右击打开git bash
 
 1. `git init`初始化一个本地git仓库
@@ -7,7 +19,7 @@
 4. `git remote add origin https://github.com/poly-zhao/something.git `把本地刚创建仓库与github上的仓库关联
 5. `git push -u origin master`最后把本地仓库内容推送到github上(以后再提交代码时不需要加 -u)
 
-### GitLab 配置公钥 SSH Key
+#### GitLab 配置公钥 SSH Key
 
 1. 桌面右键鼠标打开 "Git Bash Here" 
 2. 键入命令：ssh-keygen -t rsa -C "gitlab的邮箱账号" 
@@ -16,13 +28,117 @@
 5. 用编辑器打开id_rsa.pub文件，复制内容，在gitlab.com的网站上到ssh密钥管理页面，在Key一栏粘贴刚才复制的内容，Title一栏输入名称，这个名称随便起，建议英文，然后点击Add。 
 6. 完成
 
-### Github配置公钥
+#### Github配置公钥
 
 
 
-### 克隆Github项目到本地
+#### 克隆Github项目到本地
 
 git clone https://github.com/poly-zhao/KotlinMall(远程地址)
+
+#### 查看分支
+
+查看所有分支
+
+```
+$ git branch -a
+* master
+  remotes/origin/maste
+```
+
+查看远程分支
+
+```
+$ git branch -r
+  origin/master
+```
+
+查看本地分支
+
+```$ git branch
+$ git branch
+* master
+```
+
+#### 拉取远程分支
+
+从远程分支`origin/master` 拉取并创建新的本地分支`dev1`
+
+```
+$ git checkout -b dev1 origin/master
+Switched to a new branch 'dev1'
+Branch dev1 set up to track remote branch master from origin.
+$ git branch -a
+* dev1		//新建的本地分支, 本地当前所在的分支
+  master
+  remotes/origin/master
+```
+
+#### 切换本地分支
+
+```
+$ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'. //表示本地分支`master`与远程分支内容一样
+```
+
+还有可能出现内容不一样的情况: 假如有人向远程库提交了内容, 将本地分支切换到其他本地分支时会有以下提示, 按照提示拉取以下即可
+
+`Your branch is behind 'origin/master' by 1 commit` 
+
+#### 提交新的本地分支
+
+提交本地分支`dev1` 并建立对应新的远程分支
+
+```
+$ git push origin dev1
+Total 0 (delta 0), reused 0 (delta 0)
+remote: Updating references: 100% (1/1)
+To ssh://192.168.1.180:29418/test.git
+ * [new branch]      dev1 -> dev1
+
+$ git branch -a
+* dev1
+  master
+  remotes/origin/dev1		//新建的远程分支
+  remotes/origin/master
+```
+
+####  建立本地分支与远程分支的映射关系 
+
+ 这样使用git pull或者git push时就不必每次都要指定从远程的哪个分支拉取合并和推送到远程的哪个分支了。 
+
+- 查看映射关系
+
+  ```
+  $ git branch -vv
+  * dev1   6f1a8ba other user commit	//没有和远程库建立映射关系,在该分支上提交和拉取代码都需要指定远程分支
+    master 6f1a8ba [origin/master] other user commit	//本地master分支都是向origin/master提交和从origin/master拉取
+  ```
+
+- 建立本地分支与远程分支的映射关系
+
+  ```
+  $ git branch -u origin/dev1
+  Branch dev1 set up to track remote branch dev1 from origin.
+  $ git branch -vv
+  * dev1   6f1a8ba [origin/dev1] other user commit//与远程分支建立映射
+    master 6f1a8ba [origin/master] other user commit
+  ```
+
+- 取消本地分支与远程分支的映射关系
+
+  ```bash
+  git branch --unset-upstream
+  ```
+
+#### 合并分支
+
+``` 
+ git merge --no-ff dev
+```
+
+
 
 #### 使用上面代码向新建的空的repository时 Permission deny 异常
 
